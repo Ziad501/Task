@@ -97,4 +97,4 @@ The solution follows the principles of Clean Architecture:
 - **`Domain`**: Contains all enterprise-wide logic, including entities, value objects, and repository interfaces. It has no dependencies on other layers.
 - **`Application`**: Contains application-specific logic. It implements the CQRS pattern with commands, queries, handlers, and DTOs. It depends only on the Domain layer.
 - **`Infrastructure`**: Contains external concerns like data access (EF Core, Repositories), caching (Redis), and other third-party integrations. It depends on the Application layer.
-- **`Presentation` (within `EShop.API`)**: The entry point of the application, containing the API controllers. It depends on the Application and Infrastructure layers for dependency injection.
+- **`Presentation` (within `EShop.API`)**: The entry point of the application, containing the API controllers. It depends on the Application layer.
