@@ -17,7 +17,7 @@ namespace EShop.API.Features.Products.Queries
         public int PageSize { get; }
         public int TotalCount { get; }
         public bool HasNextPage => Page * PageSize < TotalCount;
-        public bool HasPreviousPage => PageSize > 1;
+        public bool HasPreviousPage => Page > 1;
         public static async Task<PagedList<T>> CreateAsync(IQueryable<T> query, int page, int pageSize)
         {
             page = page <= 0 ? 1 : page;

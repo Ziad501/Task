@@ -42,7 +42,7 @@ namespace EShop.API.validators
         }
         public async Task<bool> BeUniqName(ProductUpdateDto dto, CancellationToken cancellationToken)
         {
-            var exsits = await _query.GetAsync(p => p.Title == dto.Title && p.Id != dto.Id && p.Id != dto.Id, cancellationToken: cancellationToken);
+            var exsits = await _query.GetAsync(p => p.Title == dto.Title && p.Id != dto.Id , cancellationToken: cancellationToken);
             return exsits == null;
         }
     }
