@@ -29,8 +29,16 @@ namespace EShop.API.Repository
 
         public async Task UpdateAsync(T entity)
         {
-            _dbset.Update(entity);
-            await SaveAsync();
+            var local = _dbset.Local.FirstOrDefault(e => e.Id == entity.Id);
+            if (local is not null)
+            {
+                _context.Entry(local).State = EntityState.Detached;
+            }
+
+            _context.Entry(entity).State = EntityState.Modified;
+            await _context.SaveChangesAsync();
         }
+
+
     }
 }

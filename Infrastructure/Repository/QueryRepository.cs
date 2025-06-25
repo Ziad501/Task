@@ -20,11 +20,9 @@ namespace EShop.API.Repository
             return query;
         }
 
-        public async Task<T?> GetAsync(Expression<Func<T, bool>>? filter, Func<IQueryable<T>, IQueryable<T>>? include = null,bool tracked = true,CancellationToken cancellationToken = default)
+        public async Task<T?> GetAsync(Expression<Func<T, bool>>? filter, Func<IQueryable<T>, IQueryable<T>>? include = null,CancellationToken cancellationToken = default)
         {
-            IQueryable<T> query = dbSet;
-            if (!tracked)
-                query = query.AsNoTracking();
+            IQueryable<T> query = dbSet.AsNoTracking();
             if (include is not null)
                 query = include(query);
             if (filter is not null) 

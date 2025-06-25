@@ -1,20 +1,25 @@
-﻿using EShop.API.Dtos;
+﻿using Domain.Abstractions;
+using EShop.API.Dtos;
 using EShop.API.Features.Products.Commands;
 using EShop.API.Models;
 using EShop.API.Repository.IRepository;
 using FluentValidation;
 using MediatR;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Model;
+
 
 public class AddProductHandler(
     ICommandRepository<Product> _cmd,
     IValidator<ProductCreateDto> _validator)
-    : IRequestHandler<AddProductCommand, ProductDto>
+    : IRequestHandler<AddProductCommand, ResultT<ProductCreateDto>>
 {
-    public async Task<ProductDto> Handle(AddProductCommand request, CancellationToken cancellationToken)
+
+    public async Task<ResultT<ProductCreateDto>> Handle(AddProductCommand request, CancellationToken cancellationToken)
     {
         var result = await _validator.ValidateAsync(request.Dto, cancellationToken);
-        if (!result.IsValid)
-            throw new ValidationException(result.Errors);
+        if (!result.IsValid) 
+            return new Error("Validation failed", string.Join(", ", result.Errors.Select(e => e.ErrorMessage)));
+
 
         var product = new Product
         {
@@ -30,15 +35,8 @@ public class AddProductHandler(
         };
 
         await _cmd.AddAsync(product);
-
-        return new ProductDto(
-            product.Id,
-            product.Title,
-            product.Description,
-            product.ImageUrl,
-            product.CategoryId,
-            product.Category?.Name??string.Empty,
-            product.Options.Select(o => new ProductOptionDto( o.Size, o.Price)).ToList()
-        );
+        var dto = request.Dto;
+        return ResultT<ProductCreateDto>.Success(dto);
     }
 }
+

@@ -1,4 +1,5 @@
-﻿using EShop.API.Dtos;
+﻿using Domain.Abstractions;
+using EShop.API.Dtos;
 using EShop.API.Features.Products.Commands;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
@@ -9,7 +10,7 @@ namespace EShop.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize(Roles = "InventoryManager")]
+    //[Authorize(Roles = "InventoryManager")]
     public class ProductCommandController(IMediator _mediator) : ControllerBase
     {
         [HttpPost]
@@ -18,8 +19,11 @@ namespace EShop.API.Controllers
         public async Task<ActionResult<ProductDto>> AddAsync([FromBody]ProductCreateDto dto)
         {
             var result = await _mediator.Send(new AddProductCommand(dto));
-            return CreatedAtRoute("GetById", new { Id = result.Id }, result);
-
+            if (result.IsFailure)
+            {
+                return BadRequest(result.Error.description);
+            }
+            return Ok(result.Value);
         }
         [HttpPut("{id:guid}")]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -27,7 +31,20 @@ namespace EShop.API.Controllers
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         public async Task<IActionResult> UpdateAsync(Guid id, [FromBody] ProductUpdateDto dto)
         {
-            await _mediator.Send(new UpdateProductCommand(id, dto));
+            var result =await _mediator.Send(new UpdateProductCommand(id, dto));
+
+            if (result.Error.type == "NotFound")
+            {
+                return NotFound(result.Error.description);
+            }
+            if (result.Error.type == "IdMissMatch")
+            {
+                return BadRequest(result.Error.description);
+            }
+            if (result.IsFailure)
+            {
+                return BadRequest(result.Error.description);
+            }
             return NoContent();
         }
         [HttpDelete("{id:guid}")]
@@ -35,7 +52,15 @@ namespace EShop.API.Controllers
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         public async Task<IActionResult> DeleteAsync(Guid id)
         {
-            await _mediator.Send(new DeleteProductCommand(id));
+            var result =await _mediator.Send(new DeleteProductCommand(id));
+            if (result.Error.type == "NotFound")
+            {
+                return NotFound(result.Error.description);
+            }
+            if (result.IsFailure)
+            {
+                return BadRequest(result.Error.description);
+            }
             return NoContent();
         }
 

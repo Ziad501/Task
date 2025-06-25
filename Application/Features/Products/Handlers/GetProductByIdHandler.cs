@@ -1,4 +1,5 @@
-﻿using EShop.API.Dtos;
+﻿using Domain.Abstractions;
+using EShop.API.Dtos;
 using EShop.API.Features.Products.Queries;
 using EShop.API.Models;
 using EShop.API.Repository.IRepository;
@@ -8,19 +9,19 @@ using Microsoft.EntityFrameworkCore;
 namespace EShop.API.Features.Products.Handlers
 {
     public class GetProductByIdHandler(IQueryRepository<Product> _query)
-    : IRequestHandler<GetProductByIdQuery, ProductDto?>
+    : IRequestHandler<GetProductByIdQuery, ResultT<ProductDto>>
     {
-        public async Task<ProductDto?> Handle(GetProductByIdQuery request, CancellationToken cancellationToken)
+        public async Task<ResultT<ProductDto>> Handle(GetProductByIdQuery request, CancellationToken cancellationToken)
         {
             var product = await _query.GetAsync(
                 p => p.Id == request.Id,
                 include: x => x.Include(p => p.Category)
-                               .Include(p => p.Options),tracked:false,
+                               .Include(p => p.Options),
                 cancellationToken: cancellationToken);
 
-            if (product == null) return null;
+            if (product is null) return Errors.NotFound;
 
-            return new ProductDto(
+            var dto= new ProductDto(
                 product.Id,
                 product.Title,
                 product.Description,
@@ -31,6 +32,7 @@ namespace EShop.API.Features.Products.Handlers
                     o.Size,
                     o.Price)).ToList()
             );
+            return ResultT<ProductDto>.Success(dto);
         }
     }
 
