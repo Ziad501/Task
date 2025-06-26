@@ -40,11 +40,11 @@ namespace Infrastructure.Data
                 {
                     if (await userManager.FindByEmailAsync(u.Email) is null)
                     {
-                        int atIndex = u.Email.IndexOf('@');
                         var user = new AppUser
                         {
-                            UserName = u.Email[..atIndex],
+                            UserName = u.Email,
                             Email = u.Email,
+                            EmailConfirmed = true
                         };
 
                         await userManager.CreateAsync(user, u.Password);

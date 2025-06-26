@@ -9,11 +9,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
 
-namespace EShop.API.Migrations
+namespace Infrastructure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20250603140546_AddRoles")]
-    partial class AddRoles
+    [Migration("20250626100840_InitForFixConflict")]
+    partial class InitForFixConflict
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -109,6 +109,18 @@ namespace EShop.API.Migrations
                     b.HasIndex("Name");
 
                     b.ToTable("Categories");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("11111111-1111-1111-1111-111111111111"),
+                            Name = "Doors"
+                        },
+                        new
+                        {
+                            Id = new Guid("22222222-2222-2222-2222-222222222222"),
+                            Name = "Paints"
+                        });
                 });
 
             modelBuilder.Entity("EShop.API.Models.Product", b =>
@@ -142,6 +154,24 @@ namespace EShop.API.Migrations
                     b.HasIndex("Title");
 
                     b.ToTable("Products");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("33333333-3333-3333-3333-333333333333"),
+                            CategoryId = new Guid("11111111-1111-1111-1111-111111111111"),
+                            Description = "High-quality steel door for security",
+                            ImageUrl = "images/door1.jpg",
+                            Title = "Steel Security Door"
+                        },
+                        new
+                        {
+                            Id = new Guid("44444444-4444-4444-4444-444444444444"),
+                            CategoryId = new Guid("22222222-2222-2222-2222-222222222222"),
+                            Description = "Matte white paint for walls",
+                            ImageUrl = "images/paint1.jpg",
+                            Title = "Interior White Paint"
+                        });
                 });
 
             modelBuilder.Entity("EShop.API.Models.ProductOption", b =>
@@ -166,6 +196,22 @@ namespace EShop.API.Migrations
                     b.HasIndex("ProductId");
 
                     b.ToTable("ProductOptions");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("33333333-3333-3333-3333-333333333333"),
+                            Price = 3500m,
+                            ProductId = new Guid("33333333-3333-3333-3333-333333333333"),
+                            Size = "100x210 cm"
+                        },
+                        new
+                        {
+                            Id = new Guid("44444444-4444-4444-4444-444444444444"),
+                            Price = 750m,
+                            ProductId = new Guid("44444444-4444-4444-4444-444444444444"),
+                            Size = "5 Litre"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -192,29 +238,6 @@ namespace EShop.API.Migrations
                         .HasDatabaseName("RoleNameIndex");
 
                     b.ToTable("AspNetRoles", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            Id = "4206c3a4-1f96-4d05-ad34-2368691de567",
-                            ConcurrencyStamp = "66e323c1-fe75-4610-a768-c0d1b4972c6b",
-                            Name = "Client",
-                            NormalizedName = "client"
-                        },
-                        new
-                        {
-                            Id = "d0f4ea50-18be-4e67-b639-71c2c114f765",
-                            ConcurrencyStamp = "1647cd17-8ede-4ffd-adbc-e0bc90438573",
-                            Name = "InventoryManager",
-                            NormalizedName = "inventory_manager"
-                        },
-                        new
-                        {
-                            Id = "ab036215-a8ae-49c4-bb77-a4bdc5e54932",
-                            ConcurrencyStamp = "69a5616f-1435-44c2-a390-84a2e6b2935c",
-                            Name = "SalesManagers",
-                            NormalizedName = "sales_managers"
-                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
