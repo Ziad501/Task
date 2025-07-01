@@ -1,10 +1,11 @@
-﻿using EShop.API.Features.Cart.Commands;
-using EShop.API.Repository.IRepository;
+﻿using Application.Features.Cart.Commands;
+using Domain.Abstractions;
+using Domain.Repository.IRepository;
 using MediatR;
 
 namespace EShop.API.Features.Cart.Handlers
 {
-    public class DeleteCartHandler : IRequestHandler<DeleteCartCommand, bool>
+    public class DeleteCartHandler : IRequestHandler<DeleteCartCommand, Result>
     {
         private readonly ICartRepository _cartRepo;
 
@@ -13,9 +14,13 @@ namespace EShop.API.Features.Cart.Handlers
             _cartRepo = cartRepo;
         }
 
-        public async Task<bool> Handle(DeleteCartCommand request, CancellationToken cancellationToken)
+        public async Task<Result> Handle(DeleteCartCommand request, CancellationToken cancellationToken)
         {
-            return await _cartRepo.DeleteCartASync(request.Id);
+            var deleted = await _cartRepo.DeleteCartASync(request.Id);
+
+            return deleted
+                ? Result.Success()
+                : Errors.CartDeleteFailed;
         }
     }
 }

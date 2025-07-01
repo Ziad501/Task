@@ -1,8 +1,8 @@
-﻿using Domain.Abstractions;
-using EShop.API.Dtos;
+﻿using Application.Dtos;
+using Domain.Abstractions;
 using MediatR;
 
-namespace EShop.API.Features.Products.Commands
+namespace Application.Features.Products.Commands
 {
     public record UpdateProductCommand(Guid Id, ProductUpdateDto Dto) : IRequest<ResultT<ProductDto>>;
 }

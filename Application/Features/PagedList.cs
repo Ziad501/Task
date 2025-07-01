@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 
-namespace EShop.API.Features.Products.Queries
+namespace Application.Features
 {
     public class PagedList<T>
     {
@@ -24,7 +24,6 @@ namespace EShop.API.Features.Products.Queries
             pageSize = pageSize <= 0 ? 10 : pageSize;
             var totalCount = await query.CountAsync();
             var items = await query.Skip((page -1)*pageSize).Take(pageSize).ToListAsync();
-
             return new(items, page,pageSize,totalCount);
         }
     }

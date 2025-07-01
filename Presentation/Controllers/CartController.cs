@@ -1,16 +1,15 @@
-﻿using EShop.API.Dtos;
-using EShop.API.Features.Cart.Commands;
-using EShop.API.Features.Cart.Queries;
+﻿using Application.Dtos;
+using Application.Features.Cart.Commands;
+using Application.Features.Cart.Queries;
 using MediatR;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
-namespace EShop.API.Controllers
+namespace Presentation.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize(Roles = "Client")]
+    //[Authorize(Roles = "Client")]
     public class CartController(IMediator _mediator) : ControllerBase
     {
         [HttpGet("{id:guid}")]
@@ -27,8 +26,10 @@ namespace EShop.API.Controllers
         public async Task<IActionResult> UpdateCart([FromBody] CartDto dto)
         {
             var result = await _mediator.Send(new UpdateCartCommand(dto));
-            if (result == null)
-                return BadRequest("can't update cart");
+            if (result.Error.type == "CartUpdateFailed")
+            {
+                return BadRequest(result.Error.description);
+            }
             return Ok(result);
         }
 
@@ -38,8 +39,10 @@ namespace EShop.API.Controllers
         public async Task<IActionResult> DeleteCart(Guid id)
         {
             var result = await _mediator.Send(new DeleteCartCommand(id));
-            if (!result)
-                return BadRequest("can't delete the cart");
+            if (result.Error.type == "CartDeleteFailed")
+            {
+                return BadRequest(result.Error.description);
+            }
             return NoContent();
         }
     }

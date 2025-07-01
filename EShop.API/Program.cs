@@ -1,24 +1,23 @@
 ﻿using Application;
+using Domain.Models;
+using EShop.API;
+using FluentValidation.AspNetCore;
 using Infrastructure;
-using EShop.API.Data; 
-using Microsoft.AspNetCore.Identity; 
-using EShop.API.Models;
 using Infrastructure.Data;
-using EShop.API.Controllers;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Identity;
 
 var builder = WebApplication.CreateBuilder(args);
-
 builder.Services.AddApplication();
 builder.Services.AddInfrastructure(builder.Configuration);
 
-builder.Services.AddControllers().AddApplicationPart(typeof(CartController).Assembly);
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddApiControllers();
+builder.Services.AddFluentValidationAutoValidation();
 
 builder.Services.AddIdentityApiEndpoints<AppUser>()
     .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<AppDbContext>();
+
 builder.Services.AddAuthentication(options =>
 {
     options.DefaultAuthenticateScheme =
@@ -27,7 +26,8 @@ builder.Services.AddAuthentication(options =>
     options.DefaultForbidScheme =
     options.DefaultSignOutScheme =
     options.DefaultSignInScheme = JwtBearerDefaults.AuthenticationScheme;
-}).AddJwtBearer(o=>
+})
+.AddJwtBearer(o =>
 {
     o.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters
     {
@@ -41,17 +41,8 @@ builder.Services.AddAuthentication(options =>
             System.Text.Encoding.UTF8.GetBytes(builder.Configuration["Jwt:SignIngKey"]))
     };
 });
-builder.Services.AddAuthorization();
 
-builder.Services.AddCors(options =>
-{
-    options.AddPolicy("AllowAll", policy =>
-    {
-        policy.AllowAnyOrigin()
-              .AllowAnyMethod()
-              .AllowAnyHeader();
-    });
-});
+builder.Services.AddAuthorization();
 
 var app = builder.Build();
 
@@ -62,13 +53,12 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-app.UseCors("AllowAll");
+app.UseCors("AllowMe");
 
 app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapIdentityApi<AppUser>();
-
 app.MapControllers();
 
 await DbSeeder.SeedRolesAndUsersAsync(app);

@@ -1,7 +1,7 @@
-﻿using EShop.API.Features.Products.Commands;
-using EShop.API.validators;
-using Microsoft.Extensions.DependencyInjection;
+﻿using Application.Features.Products.Commands;
+using Application.validators;
 using FluentValidation;
+using Microsoft.Extensions.DependencyInjection;
 namespace Application
 {
     public static class ApplicationAssembly

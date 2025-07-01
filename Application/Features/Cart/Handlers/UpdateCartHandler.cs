@@ -1,12 +1,13 @@
-﻿using EShop.API.Dtos;
-using EShop.API.Features.Cart.Commands;
-using EShop.API.Models;
-using EShop.API.Repository.IRepository;
+﻿using Application.Dtos;
+using Application.Features.Cart.Commands;
+using Domain.Abstractions;
+using Domain.Models;
+using Domain.Repository.IRepository;
 using MediatR;
 
-namespace EShop.API.Features.Cart.Handlers
+namespace Application.Features.Cart.Handlers
 {
-    public class UpdateCartHandler : IRequestHandler<UpdateCartCommand, CartDto>
+    public class UpdateCartHandler : IRequestHandler<UpdateCartCommand, ResultT<CartDto>>
     {
         private readonly ICartRepository _cartRepo;
 
@@ -15,25 +16,41 @@ namespace EShop.API.Features.Cart.Handlers
             _cartRepo = cartRepo;
         }
 
-        public async Task<CartDto> Handle(UpdateCartCommand request, CancellationToken cancellationToken)
+        public async Task<ResultT<CartDto>> Handle(UpdateCartCommand request, CancellationToken cancellationToken)
         {
-            var cart = new Models.Cart
+            var cart = new Domain.Models.Cart
             {
                 Id = request.CartDto.Id,
                 Items = request.CartDto.Items.Select(p => new CartItem
                 {
                     ProductId = p.ProductId,
                     ProductTitle = p.ProductName,
-                    Price = p.Price,
                     Description = p.Description,
                     ImageUrl = p.ImageUrl,
+                    Price = p.Price,
+                    Quantity = p.Quantity
                 }).ToList()
             };
 
-            var updatedCart = await _cartRepo.SetCartAsync(cart);
-            if (updatedCart == null)
-                return null;
-            return request.CartDto;
+            var updated = await _cartRepo.SetCartAsync(cart);
+
+            if (updated is null)
+                return Errors.CartUpdateFailed;
+            var cartDto = new CartDto
+            {
+                Id = updated.Id,
+                Items = updated.Items.Select(p => new CartItemsDto
+                {
+                    ProductId = p.ProductId,
+                    ProductName = p.ProductTitle,
+                    Description = p.Description,
+                    ImageUrl = p.ImageUrl,
+                    Price = p.Price,
+                    Quantity = p.Quantity
+                }).ToList()
+            };
+
+            return ResultT<CartDto>.Success(request.CartDto);
         }
     }
 }

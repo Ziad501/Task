@@ -1,7 +1,7 @@
-﻿using EShop.API.Dtos;
+﻿using Application.Dtos;
 using MediatR;
 
-namespace EShop.API.Features.Products.Queries
+namespace Application.Features.Products.Queries
 {
     public record GetAllProductsQuery(string? SearchedItem, int page, int pageSize) : IRequest<PagedList<ProductDto>>;
     

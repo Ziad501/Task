@@ -1,12 +1,12 @@
-﻿using Domain.Abstractions;
-using EShop.API.Dtos;
-using EShop.API.Features.Products.Queries;
-using EShop.API.Models;
-using EShop.API.Repository.IRepository;
+﻿using Application.Dtos;
+using Application.Features.Products.Queries;
+using Domain.Abstractions;
+using Domain.Abstractions.IRepository;
+using Domain.Models;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
-namespace EShop.API.Features.Products.Handlers
+namespace Application.Features.Products.Handlers
 {
     public class GetProductByIdHandler(IQueryRepository<Product> _query)
     : IRequestHandler<GetProductByIdQuery, ResultT<ProductDto>>

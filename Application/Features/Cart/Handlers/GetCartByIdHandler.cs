@@ -1,9 +1,9 @@
-﻿using EShop.API.Dtos;
-using EShop.API.Features.Cart.Queries;
-using EShop.API.Repository.IRepository;
+﻿using Application.Dtos;
+using Application.Features.Cart.Queries;
+using Domain.Repository.IRepository;
 using MediatR;
 
-namespace EShop.API.Features.Cart.Handlers
+namespace Application.Features.Cart.Handlers
 {
     public class GetCartByIdHandler : IRequestHandler<GetCartByIdQuery, CartDto>
     {
@@ -17,7 +17,7 @@ namespace EShop.API.Features.Cart.Handlers
         public async Task<CartDto> Handle(GetCartByIdQuery request, CancellationToken cancellationToken)
         {
             var cart = await _cartRepo.GetCartAsync(request.Id);
-
+            if (cart == null) return null;
             return new CartDto
             {
                 Id = request.Id,

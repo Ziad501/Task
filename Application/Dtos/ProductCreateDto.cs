@@ -1,6 +1,5 @@
-﻿using EShop.API.Models;
-
-namespace EShop.API.Dtos
+﻿
+namespace Application.Dtos
 {
     public sealed class ProductCreateDto
     {

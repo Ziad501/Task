@@ -1,6 +1,6 @@
-﻿using EShop.API.Data;
-using EShop.API.Models;
-using EShop.API.Repository.IRepository;
+﻿using Domain.Abstractions.IRepository;
+using Domain.Models;
+using Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 
 namespace EShop.API.Repository

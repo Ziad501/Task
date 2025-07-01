@@ -1,4 +1,4 @@
-﻿namespace EShop.API.Dtos
+﻿namespace Application.Dtos
 {
     public record ProductDto(
 

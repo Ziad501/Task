@@ -9,7 +9,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Infrastructure.Migrations
 {
     /// <inheritdoc />
-    public partial class InitForFixConflict : Migration
+    public partial class InitWithProductAndOrederEntities : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -64,6 +64,32 @@ namespace Infrastructure.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Categories", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Orders",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    OrderDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    BuyerEmail = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
+                    ShippingAddress_Name = table.Column<string>(type: "text", nullable: false),
+                    ShippingAddress_Line1 = table.Column<string>(type: "text", nullable: false),
+                    ShippingAddress_Line2 = table.Column<string>(type: "text", nullable: false),
+                    ShippingAddress_City = table.Column<string>(type: "text", nullable: false),
+                    ShippingAddress_State = table.Column<string>(type: "text", nullable: false),
+                    ShippingAddress_PostalCode = table.Column<string>(type: "text", nullable: false),
+                    ShippingAddress_Country = table.Column<string>(type: "text", nullable: false),
+                    PaymentSummery_Last4 = table.Column<int>(type: "integer", maxLength: 4, nullable: false),
+                    PaymentSummery_ExpMonth = table.Column<int>(type: "integer", maxLength: 2, nullable: false),
+                    PaymentSummery_ExpYear = table.Column<int>(type: "integer", maxLength: 2, nullable: false),
+                    SubTotal = table.Column<decimal>(type: "numeric(18,2)", nullable: false),
+                    Status = table.Column<string>(type: "text", nullable: false),
+                    PaymentIntentId = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Orders", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -180,6 +206,7 @@ namespace Infrastructure.Migrations
                     Title = table.Column<string>(type: "character varying(150)", maxLength: 150, nullable: false),
                     Description = table.Column<string>(type: "character varying(1000)", maxLength: 1000, nullable: false),
                     ImageUrl = table.Column<string>(type: "character varying(300)", maxLength: 300, nullable: false),
+                    Quantity = table.Column<int>(type: "integer", nullable: false),
                     CategoryId = table.Column<Guid>(type: "uuid", nullable: false)
                 },
                 constraints: table =>
@@ -191,6 +218,31 @@ namespace Infrastructure.Migrations
                         principalTable: "Categories",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.SetNull);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "OrderedItems",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    ItemOrdered_ProductID = table.Column<Guid>(type: "uuid", nullable: false),
+                    ItemOrdered_ProductName = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
+                    ItemOrdered_ProductImage = table.Column<string>(type: "text", nullable: false),
+                    ItemOrdered_ProductSize = table.Column<string>(type: "text", nullable: false),
+                    ItemOrdered_ProductPrice = table.Column<decimal>(type: "numeric(18,2)", nullable: false),
+                    Price = table.Column<decimal>(type: "numeric(18,2)", nullable: false),
+                    Quantity = table.Column<int>(type: "integer", nullable: false),
+                    OrderId = table.Column<Guid>(type: "uuid", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_OrderedItems", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_OrderedItems_Orders_OrderId",
+                        column: x => x.OrderId,
+                        principalTable: "Orders",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -224,11 +276,11 @@ namespace Infrastructure.Migrations
 
             migrationBuilder.InsertData(
                 table: "Products",
-                columns: new[] { "Id", "CategoryId", "Description", "ImageUrl", "Title" },
+                columns: new[] { "Id", "CategoryId", "Description", "ImageUrl", "Quantity", "Title" },
                 values: new object[,]
                 {
-                    { new Guid("33333333-3333-3333-3333-333333333333"), new Guid("11111111-1111-1111-1111-111111111111"), "High-quality steel door for security", "images/door1.jpg", "Steel Security Door" },
-                    { new Guid("44444444-4444-4444-4444-444444444444"), new Guid("22222222-2222-2222-2222-222222222222"), "Matte white paint for walls", "images/paint1.jpg", "Interior White Paint" }
+                    { new Guid("33333333-3333-3333-3333-333333333333"), new Guid("11111111-1111-1111-1111-111111111111"), "High-quality steel door for security", "images/door1.jpg", 0, "Steel Security Door" },
+                    { new Guid("44444444-4444-4444-4444-444444444444"), new Guid("22222222-2222-2222-2222-222222222222"), "Matte white paint for walls", "images/paint1.jpg", 0, "Interior White Paint" }
                 });
 
             migrationBuilder.InsertData(
@@ -283,6 +335,11 @@ namespace Infrastructure.Migrations
                 column: "Name");
 
             migrationBuilder.CreateIndex(
+                name: "IX_OrderedItems_OrderId",
+                table: "OrderedItems",
+                column: "OrderId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_ProductOptions_ProductId",
                 table: "ProductOptions",
                 column: "ProductId");
@@ -317,6 +374,9 @@ namespace Infrastructure.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
+                name: "OrderedItems");
+
+            migrationBuilder.DropTable(
                 name: "ProductOptions");
 
             migrationBuilder.DropTable(
@@ -324,6 +384,9 @@ namespace Infrastructure.Migrations
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
+
+            migrationBuilder.DropTable(
+                name: "Orders");
 
             migrationBuilder.DropTable(
                 name: "Products");

@@ -1,9 +1,9 @@
-﻿using EShop.API.Dtos;
-using EShop.API.Models;
-using EShop.API.Repository.IRepository;
+﻿using Domain.Abstractions.IRepository;
+using Domain.Models;
+using Application.Dtos;
 using FluentValidation;
 
-namespace EShop.API.validators
+namespace Application.validators
 {
     public class ProductCreateDtoValidator : AbstractValidator<ProductCreateDto>
     {

@@ -1,10 +1,9 @@
-﻿using EShop.API.Dtos;
-using EShop.API.Models;
-using EShop.API.Repository.IRepository;
+﻿using Application.Dtos;
+using Domain.Abstractions.IRepository;
+using Domain.Models;
 using FluentValidation;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
-namespace EShop.API.validators
+namespace Application.validators
 {
     public class ProductUpdateDtoValidator : AbstractValidator<ProductUpdateDto>
     {

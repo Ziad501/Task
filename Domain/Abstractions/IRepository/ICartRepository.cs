@@ -1,6 +1,7 @@
-﻿using EShop.API.Models;
+﻿
+using Domain.Models;
 
-namespace EShop.API.Repository.IRepository
+namespace Domain.Repository.IRepository
 {
     public interface ICartRepository
     {

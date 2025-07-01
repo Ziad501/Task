@@ -1,10 +1,10 @@
-﻿using EShop.API.Dtos;
-using EShop.API.Features.Products.Queries;
+﻿using Application.Dtos;
+using Application.Features.Products.Queries;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
-namespace EShop.API.Controllers
+namespace Presentation.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]

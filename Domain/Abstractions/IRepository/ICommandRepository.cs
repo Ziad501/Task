@@ -1,6 +1,6 @@
-﻿using EShop.API.Models;
+﻿using Domain.Models;
 
-namespace EShop.API.Repository.IRepository
+namespace Domain.Abstractions.IRepository
 {
     public interface ICommandRepository<T> where T : BaseEntity
     {

@@ -1,7 +1,7 @@
-﻿using EShop.API.Models;
+﻿using Domain.Models;
 using System.Linq.Expressions;
 
-namespace EShop.API.Repository.IRepository
+namespace Domain.Abstractions.IRepository
 {
     public interface IQueryRepository<T> where T : BaseEntity
     {

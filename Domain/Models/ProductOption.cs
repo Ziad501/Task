@@ -1,4 +1,4 @@
-﻿namespace EShop.API.Models
+﻿namespace Domain.Models
 {
     public sealed class ProductOption : BaseEntity
     {

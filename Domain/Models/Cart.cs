@@ -1,8 +1,7 @@
-﻿namespace EShop.API.Models
+﻿namespace Domain.Models
 {
-    public sealed class Cart
+    public sealed class Cart : BaseEntity
     {
-        public required Guid Id { get; set; }
         public List<CartItem> Items { get; set; } = [];
     }
 }

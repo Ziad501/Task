@@ -1,7 +1,7 @@
-﻿using EShop.API.Dtos;
+﻿using Application.Dtos;
 using FluentValidation;
 
-namespace EShop.API.validators
+namespace Application.validators
 {
     public class ProductOptionUpdateDtoValidator : AbstractValidator<ProductOptionUpdateDto>
     {

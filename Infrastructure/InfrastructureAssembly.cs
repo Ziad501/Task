@@ -1,6 +1,7 @@
-﻿using EShop.API.Data;
+﻿using Domain.Abstractions.IRepository;
+using Domain.Repository.IRepository;
 using EShop.API.Repository;
-using EShop.API.Repository.IRepository;
+using Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;

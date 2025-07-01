@@ -1,8 +1,9 @@
-﻿using EShop.API.Dtos;
+﻿using Application.Dtos;
+using Domain.Abstractions;
 using MediatR;
 
-namespace EShop.API.Features.Cart.Commands
+namespace Application.Features.Cart.Commands
 {
-    
-    public record UpdateCartCommand(CartDto CartDto) : IRequest<CartDto>;
+
+    public record UpdateCartCommand(CartDto CartDto) : IRequest<ResultT<CartDto>>;
 }

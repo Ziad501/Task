@@ -1,8 +1,8 @@
-﻿using EShop.API.Models;
+﻿using Domain.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace EShop.API.FluentConfigurations
+namespace Infrastructure.FluentConfigurations
 {
     internal sealed class CategoryConfig : IEntityTypeConfiguration<Category>
     {

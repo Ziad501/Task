@@ -1,8 +1,8 @@
-﻿using Domain.Abstractions;
-using EShop.API.Dtos;
+﻿using Application.Dtos;
+using Domain.Abstractions;
 using MediatR;
 
-namespace EShop.API.Features.Products.Queries
+namespace Application.Features.Products.Queries
 {
     public record GetProductByIdQuery(Guid Id) : IRequest<ResultT<ProductDto>>;
 }

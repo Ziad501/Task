@@ -1,5 +1,5 @@
-﻿using EShop.API.Models;
-using EShop.API.Repository.IRepository;
+﻿using Domain.Models;
+using Domain.Repository.IRepository;
 using StackExchange.Redis;
 using System.Text.Json;
 
