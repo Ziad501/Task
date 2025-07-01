@@ -1,6 +1,6 @@
 ﻿using Application.Features.Cart.Commands;
+using Application.Interfaces;
 using Domain.Abstractions;
-using Domain.Abstractions.IRepository;
 using MediatR;
 
 namespace EShop.API.Features.Cart.Handlers

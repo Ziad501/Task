@@ -1,7 +1,7 @@
 ﻿using Application.Dtos;
 using Application.Features.Products.Queries;
+using Application.Interfaces;
 using Domain.Abstractions;
-using Domain.Abstractions.IRepository;
 using Domain.Models;
 using MediatR;
 using Microsoft.EntityFrameworkCore;

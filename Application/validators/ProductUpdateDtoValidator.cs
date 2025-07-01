@@ -1,5 +1,5 @@
 ﻿using Application.Dtos;
-using Domain.Abstractions.IRepository;
+using Application.Interfaces;
 using Domain.Models;
 using FluentValidation;
 

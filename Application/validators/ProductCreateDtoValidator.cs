@@ -1,7 +1,7 @@
-﻿using Domain.Abstractions.IRepository;
-using Domain.Models;
+﻿using Domain.Models;
 using Application.Dtos;
 using FluentValidation;
+using Application.Interfaces;
 
 namespace Application.validators
 {

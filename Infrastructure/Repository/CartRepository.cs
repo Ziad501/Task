@@ -1,4 +1,4 @@
-﻿using Domain.Abstractions.IRepository;
+﻿using Application.Interfaces;
 using Domain.Models;
 using StackExchange.Redis;
 using System.Text.Json;

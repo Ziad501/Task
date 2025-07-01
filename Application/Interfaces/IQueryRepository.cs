@@ -1,7 +1,7 @@
 ﻿using Domain.Models;
 using System.Linq.Expressions;
 
-namespace Domain.Abstractions.IRepository
+namespace Application.Interfaces
 {
     public interface IQueryRepository<T> where T : BaseEntity
     {

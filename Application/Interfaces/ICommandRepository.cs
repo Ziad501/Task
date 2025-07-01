@@ -1,6 +1,6 @@
 ﻿using Domain.Models;
 
-namespace Domain.Abstractions.IRepository
+namespace Application.Interfaces
 {
     public interface ICommandRepository<T> where T : BaseEntity
     {

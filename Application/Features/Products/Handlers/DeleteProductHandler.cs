@@ -1,6 +1,6 @@
 ﻿using Application.Features.Products.Commands;
+using Application.Interfaces;
 using Domain.Abstractions;
-using Domain.Abstractions.IRepository;
 using Domain.Models;
 using MediatR;
 
