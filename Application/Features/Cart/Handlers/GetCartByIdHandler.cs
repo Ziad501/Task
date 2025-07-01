@@ -1,6 +1,6 @@
 ﻿using Application.Dtos;
 using Application.Features.Cart.Queries;
-using Domain.Repository.IRepository;
+using Domain.Abstractions.IRepository;
 using MediatR;
 
 namespace Application.Features.Cart.Handlers

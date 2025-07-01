@@ -2,7 +2,6 @@
 using Domain.Abstractions.IRepository;
 using Domain.Models;
 using Domain.Models.Order;
-using Domain.Repository.IRepository;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;

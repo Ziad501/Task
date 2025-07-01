@@ -1,7 +1,6 @@
-﻿
-using Domain.Models;
+﻿using Domain.Models;
 
-namespace Domain.Repository.IRepository
+namespace Domain.Abstractions.IRepository
 {
     public interface ICartRepository
     {

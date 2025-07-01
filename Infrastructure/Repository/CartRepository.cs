@@ -1,9 +1,9 @@
-﻿using Domain.Models;
-using Domain.Repository.IRepository;
+﻿using Domain.Abstractions.IRepository;
+using Domain.Models;
 using StackExchange.Redis;
 using System.Text.Json;
 
-namespace EShop.API.Repository
+namespace Infrastructure.Repository
 {
     public class CartRepository : ICartRepository
     {

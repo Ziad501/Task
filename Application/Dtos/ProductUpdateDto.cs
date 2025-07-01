@@ -9,5 +9,4 @@
         public Guid CategoryId { get; set; }
         public List<ProductOptionUpdateDto> Options { get; set; } = new();
     }
-
 }

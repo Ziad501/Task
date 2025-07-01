@@ -3,7 +3,7 @@ using Domain.Models;
 using Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 
-namespace EShop.API.Repository
+namespace Infrastructure.Repository
 {
     public class CommandRepository<T>(AppDbContext _context) : ICommandRepository<T> where T : BaseEntity
     {

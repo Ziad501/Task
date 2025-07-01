@@ -4,7 +4,7 @@ using Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
 
-namespace EShop.API.Repository
+namespace Infrastructure.Repository
 {
     public class QueryRepository<T>(AppDbContext _context) : IQueryRepository<T> where T : BaseEntity
     {
