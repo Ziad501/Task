@@ -8,6 +8,6 @@
         public string Size { get; set; } = "Standard";
         public required string Description { get; set; }
         public required string ImageUrl { get; set; }
-        public int Quantity { get; internal set; }
+        public int Quantity { get;  set; }
     }
 }
