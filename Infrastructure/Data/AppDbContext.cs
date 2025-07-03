@@ -1,5 +1,5 @@
 ﻿using Domain.Models;
-using Domain.Models.Order;
+using Domain.Models.Orders;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 

@@ -1,4 +1,4 @@
-﻿using Domain.Models.Order;
+﻿using Domain.Models.Orders;
 
 namespace Application.Dtos
 {

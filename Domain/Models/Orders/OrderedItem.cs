@@ -1,4 +1,5 @@
-﻿namespace Domain.Models.Order
+﻿
+namespace Domain.Models.Orders
 {
     public class OrderedItem : BaseEntity
     {

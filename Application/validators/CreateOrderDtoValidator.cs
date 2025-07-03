@@ -18,13 +18,11 @@ namespace Application.validators
             RuleFor(x => x.ShippingAddress.PostalCode).NotEmpty();
             RuleFor(x => x.ShippingAddress.Country).NotEmpty();
 
-            RuleFor(x => x.PaymentSummery).NotNull();
-            RuleFor(x => x.PaymentSummery.Last4)
-                .NotEmpty().LessThanOrEqualTo(4).WithMessage("Last4 must be 4 characters");
-            RuleFor(x => x.PaymentSummery.ExpMonth)
-                .NotEmpty().LessThanOrEqualTo(2).WithMessage("ExpMonth must be 2 characters");
-            RuleFor(x => x.PaymentSummery.ExpYear)
-                .NotEmpty().LessThanOrEqualTo(2).WithMessage("ExpYear must be 2 characters");
+            RuleFor(x => x.PaymentSummery.Last4).InclusiveBetween(0, 9999).WithMessage("Last4 must be a 4-digit number");
+
+            RuleFor(x => x.PaymentSummery.ExpMonth).InclusiveBetween(1, 12).WithMessage("ExpMonth must be 1-12");
+
+            RuleFor(x => x.PaymentSummery.ExpYear).InclusiveBetween(0, 99).WithMessage("ExpYear must be 0-99");
         }
     }
 }
