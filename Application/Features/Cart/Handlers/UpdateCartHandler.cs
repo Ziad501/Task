@@ -1,23 +1,21 @@
 ﻿using Application.Dtos;
 using Application.Features.Cart.Commands;
 using Application.Interfaces;
+using Application.validators;
 using Domain.Abstractions;
 using Domain.Models;
+using FluentValidation;
 using MediatR;
 
 namespace Application.Features.Cart.Handlers
 {
-    public class UpdateCartHandler : IRequestHandler<UpdateCartCommand, ResultT<CartDto>>
+    public class UpdateCartHandler(ICartRepository _cartRepo, IValidator<CartDto> validator) : IRequestHandler<UpdateCartCommand, ResultT<CartDto>>
     {
-        private readonly ICartRepository _cartRepo;
-
-        public UpdateCartHandler(ICartRepository cartRepo)
-        {
-            _cartRepo = cartRepo;
-        }
-
         public async Task<ResultT<CartDto>> Handle(UpdateCartCommand request, CancellationToken cancellationToken)
         {
+            var validation = await validator.ValidateAsync(request.CartDto, cancellationToken);
+            if (!validation.IsValid)
+                return new Error("validation_error", string.Join(", ", validation.Errors.Select(e => e.ErrorMessage)));
             var cart = new Domain.Models.Cart
             {
                 Id = request.CartDto.Id,

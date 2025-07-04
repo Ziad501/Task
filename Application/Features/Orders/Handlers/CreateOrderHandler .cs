@@ -4,14 +4,20 @@ using Application.Interfaces;
 using Domain.Abstractions;
 using Domain.Models;
 using Domain.Models.Orders;
+using FluentValidation;
 using MediatR;
+using System.ComponentModel.DataAnnotations;
 
 namespace Application.Features.Orders.Handlers
 {
-    public class CreateOrderHandler(ICartRepository _cart, ICommandRepository<Order> _order, IQueryRepository<Product> _product) : IRequestHandler<CreateOrderCommand, ResultT<OrderDto>>
+    public class CreateOrderHandler(ICartRepository _cart, ICommandRepository<Order> _order, IQueryRepository<Product> _product, IValidator<CreateOrderDto> validator) : IRequestHandler<CreateOrderCommand, ResultT<OrderDto>>
     {
         public async Task<ResultT<OrderDto>> Handle(CreateOrderCommand request, CancellationToken cancellationToken)
         {
+            var validation = await validator.ValidateAsync(request.Dto, cancellationToken);
+            if (!validation.IsValid)
+                return new Error("validation_error", string.Join(", ", validation.Errors.Select(e => e.ErrorMessage)));
+
             var dto = request.Dto;
             var buyerEmail = request.BuyerEmail;
 
