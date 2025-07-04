@@ -10,7 +10,7 @@ namespace Infrastructure.Repository
     {
         internal DbSet<T> dbSet = _context.Set<T>();
 
-        public IQueryable<T> GetAll(Expression<Func<T, bool>>? filter = null,Func<IQueryable<T> ,IQueryable<T>>? include = null,CancellationToken cancellationToken = default)
+        public IQueryable<T> GetAll(Expression<Func<T, bool>>? filter = null,Func<IQueryable<T> ,IQueryable<T>>? include = null)
         {
             IQueryable<T> query = dbSet.AsNoTracking();
             if (include is not null)

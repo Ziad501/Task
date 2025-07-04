@@ -7,7 +7,7 @@ using MediatR;
 
 namespace Application.Features.Orders.Handlers
 {
-    public class GetOrdersQueryHandler(IQueryRepository<Domain.Models.Orders.Order> _order): IRequestHandler<GetOrdersQuery, ResultT<PagedList<OrderDto>>>
+    public class GetOrdersQueryHandler(IQueryRepository<Order> _order): IRequestHandler<GetOrdersQuery, ResultT<PagedList<OrderDto>>>
     {
         public async Task<ResultT<PagedList<OrderDto>>> Handle(GetOrdersQuery request,CancellationToken cancellationToken)
         {
@@ -37,7 +37,7 @@ namespace Application.Features.Orders.Handlers
                     Quantity = oi.Quantity
                 }).ToList()});
 
-            var paged = await PagedList<OrderDto>.CreateAsync(dtoQuery, request.Page, request.PageSize);
+            var paged = await PagedList<OrderDto>.CreateAsync(dtoQuery, request.Page, request.PageSize,cancellationToken);
 
             return ResultT<PagedList<OrderDto>>.Success(paged);
         }

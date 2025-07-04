@@ -30,7 +30,7 @@ namespace Presentation.Controllers
             if (!result.IsSuccess)
                 return BadRequest(result.Error.description);
 
-            return CreatedAtRoute("GetOrder",new { id = result.Value.Id },result?.Value);
+            return CreatedAtRoute("GetOrder",new { id = result?.Value?.Id },result?.Value);
         }
 
         [HttpGet("{id:guid}", Name = "GetOrder")]

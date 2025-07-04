@@ -7,11 +7,11 @@ using MediatR;
 
 namespace Application.Features.Orders.Handlers
 {
-    public class GetOrderByIdQueryHandler(IQueryRepository<Domain.Models.Orders.Order> _order): IRequestHandler<GetOrderByIdQuery, ResultT<OrderDto>>
+    public class GetOrderByIdQueryHandler(IQueryRepository<Order> _order): IRequestHandler<GetOrderByIdQuery, ResultT<OrderDto>>
     {
         public async Task<ResultT<OrderDto>> Handle(GetOrderByIdQuery request, CancellationToken cancellationToken)
         {
-            var order = await _order.GetAsync(o => o.Id == request.Id);
+            var order = await _order.GetAsync(o => o.Id == request.Id, cancellationToken: cancellationToken);
             if (order == null)
                 return Errors.NotFound;
 

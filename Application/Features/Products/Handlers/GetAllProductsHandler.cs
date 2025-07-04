@@ -29,7 +29,7 @@ namespace Application.Features.Products.Handlers
                     o.Size,
                     o.Price)).ToList()
             ));
-            return await PagedList<ProductDto>.CreateAsync(productResponse, request.page, request.pageSize);
+            return await PagedList<ProductDto>.CreateAsync(productResponse, request.page, request.pageSize,cancellationToken);
 
         }
     }

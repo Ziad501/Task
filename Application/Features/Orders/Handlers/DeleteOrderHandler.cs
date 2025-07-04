@@ -1,11 +1,12 @@
 ﻿using Application.Features.Orders.Commands;
 using Application.Interfaces;
 using Domain.Abstractions;
+using Domain.Models.Orders;
 using MediatR;
 
 namespace Application.Features.Orders.Handlers
 {
-    public class DeleteOrderCommandHandler(ICommandRepository<Domain.Models.Orders.Order> _cmd , IQueryRepository<Domain.Models.Orders.Order> _query) : IRequestHandler<DeleteOrderCommand, Result>
+    public class DeleteOrderCommandHandler(ICommandRepository<Order> _cmd , IQueryRepository<Order> _query) : IRequestHandler<DeleteOrderCommand, Result>
     {
         public async Task<Result> Handle(
             DeleteOrderCommand request,

@@ -49,8 +49,7 @@ namespace Application.Features.Cart.Handlers
                     Quantity = p.Quantity
                 }).ToList()
             };
-
-            return ResultT<CartDto>.Success(request.CartDto);
+            return ResultT<CartDto>.Success(cartDto);
         }
     }
 }

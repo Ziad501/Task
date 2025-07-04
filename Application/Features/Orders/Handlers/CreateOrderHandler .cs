@@ -6,9 +6,9 @@ using Domain.Models;
 using Domain.Models.Orders;
 using MediatR;
 
-namespace Application.Features.Order.Handlers
+namespace Application.Features.Orders.Handlers
 {
-    public class CreateOrderHandler(ICartRepository _cart, ICommandRepository<Domain.Models.Orders.Order> _order, IQueryRepository<Product> _product) : IRequestHandler<CreateOrderCommand, ResultT<OrderDto>>
+    public class CreateOrderHandler(ICartRepository _cart, ICommandRepository<Order> _order, IQueryRepository<Product> _product) : IRequestHandler<CreateOrderCommand, ResultT<OrderDto>>
     {
         public async Task<ResultT<OrderDto>> Handle(CreateOrderCommand request, CancellationToken cancellationToken)
         {
@@ -41,7 +41,7 @@ namespace Application.Features.Order.Handlers
                 });
             }
 
-            var order = new Domain.Models.Orders.Order
+            var order = new Order
             {
                 OrderedItems = items,
                 ShippingAddress = dto.ShippingAddress,

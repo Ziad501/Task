@@ -3,7 +3,7 @@ using Application.Interfaces;
 using Domain.Abstractions;
 using MediatR;
 
-namespace EShop.API.Features.Cart.Handlers
+namespace Application.Features.Cart.Handlers
 {
     public class DeleteCartHandler : IRequestHandler<DeleteCartCommand, Result>
     {
@@ -18,9 +18,7 @@ namespace EShop.API.Features.Cart.Handlers
         {
             var deleted = await _cartRepo.DeleteCartASync(request.Id);
 
-            return deleted
-                ? Result.Success()
-                : Errors.CartDeleteFailed;
+            return deleted? Result.Success(): Errors.CartDeleteFailed;
         }
     }
 }

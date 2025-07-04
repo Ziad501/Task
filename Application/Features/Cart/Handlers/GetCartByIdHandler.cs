@@ -1,11 +1,12 @@
 ﻿using Application.Dtos;
 using Application.Features.Cart.Queries;
 using Application.Interfaces;
+using Domain.Abstractions;
 using MediatR;
 
 namespace Application.Features.Cart.Handlers
 {
-    public class GetCartByIdHandler : IRequestHandler<GetCartByIdQuery, CartDto>
+    public class GetCartByIdHandler : IRequestHandler<GetCartByIdQuery, ResultT<CartDto>>
     {
         private readonly ICartRepository _cartRepo;
 
@@ -14,11 +15,11 @@ namespace Application.Features.Cart.Handlers
             _cartRepo = cartRepo;
         }
 
-        public async Task<CartDto> Handle(GetCartByIdQuery request, CancellationToken cancellationToken)
+        public async Task<ResultT<CartDto>> Handle(GetCartByIdQuery request, CancellationToken cancellationToken)
         {
             var cart = await _cartRepo.GetCartAsync(request.Id);
-            if (cart == null) return null;
-            return new CartDto
+            if (cart == null) return Errors.NoSuchCart;
+            var cartDto = new CartDto
             {
                 Id = request.Id,
                 Items = cart?.Items.Select(p => new CartItemsDto
@@ -30,6 +31,7 @@ namespace Application.Features.Cart.Handlers
                     ImageUrl = p.ImageUrl
                 }).ToList() ?? new List<CartItemsDto>()
             };
+            return ResultT<CartDto>.Success(cartDto);
         }
     }
 }
