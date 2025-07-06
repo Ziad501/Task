@@ -1,4 +1,4 @@
-﻿namespace Application.Dtos
+﻿namespace Application.Dtos.ProductDtos
 {
     public sealed class ProductOptionCreateDto
     {

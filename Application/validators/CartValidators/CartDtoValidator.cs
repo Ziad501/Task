@@ -1,7 +1,7 @@
-﻿using Application.Dtos;
+﻿using Application.Dtos.CartDtos;
 using FluentValidation;
 
-namespace Application.validators
+namespace Application.validators.CartValidators
 {
     public class CartDtoValidator : AbstractValidator<CartDto>
     {

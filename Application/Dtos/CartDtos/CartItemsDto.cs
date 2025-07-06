@@ -1,6 +1,6 @@
-﻿namespace Application.Dtos
+﻿namespace Application.Dtos.CartDtos
 {
-    public sealed class CartItemsDto
+    public class CartItemsDto
     {
         public Guid ProductId { get; set; }
         public string ProductName { get; set; } = string.Empty;

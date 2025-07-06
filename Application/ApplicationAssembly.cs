@@ -1,5 +1,5 @@
 ﻿using Application.Features.Products.Commands;
-using Application.validators;
+using Application.validators.ProductValidators;
 using FluentValidation;
 using Microsoft.Extensions.DependencyInjection;
 namespace Application

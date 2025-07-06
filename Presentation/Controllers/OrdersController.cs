@@ -1,4 +1,4 @@
-﻿using Application.Dtos;
+﻿using Application.Dtos.OrderDtos;
 using Application.Features.Orders.Commands;
 using Application.Features.Orders.Queries;
 using MediatR;

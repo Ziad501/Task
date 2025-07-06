@@ -1,4 +1,4 @@
-﻿using Application.Dtos;
+﻿using Application.Dtos.ProductDtos;
 using Application.Features.Products.Queries;
 using MediatR;
 using Microsoft.AspNetCore.Http;

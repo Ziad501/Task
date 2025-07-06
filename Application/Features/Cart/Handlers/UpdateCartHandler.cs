@@ -1,7 +1,6 @@
-﻿using Application.Dtos;
+﻿using Application.Dtos.CartDtos;
 using Application.Features.Cart.Commands;
 using Application.Interfaces;
-using Application.validators;
 using Domain.Abstractions;
 using Domain.Models;
 using FluentValidation;

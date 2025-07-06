@@ -1,9 +1,9 @@
-﻿using Application.Dtos;
+﻿using Application.Dtos.CategoryDtos;
 using Application.Interfaces;
 using Domain.Models;
 using FluentValidation;
 
-namespace Application.validators
+namespace Application.validators.CategoryValidators
 {
     public class CategoryUpdateDtoValidator : AbstractValidator<CategoryUpdateDto>
     {

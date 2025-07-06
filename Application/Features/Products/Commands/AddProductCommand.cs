@@ -1,4 +1,4 @@
-﻿using Application.Dtos;
+﻿using Application.Dtos.ProductDtos;
 using Domain.Abstractions;
 using MediatR;
 

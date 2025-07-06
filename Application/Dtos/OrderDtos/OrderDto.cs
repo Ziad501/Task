@@ -1,6 +1,4 @@
-﻿using Domain.Models.Orders;
-
-namespace Application.Dtos
+﻿namespace Application.Dtos.OrderDtos
 {
     public class OrderDto
     {
@@ -11,8 +9,8 @@ namespace Application.Dtos
         public decimal SubTotal { get; set; }
         public string PaymentIntentId { get; set; } = string.Empty;
 
-        public ShippingAddress ShippingAddress { get; set; } = null!;
-        public PaymentSummery PaymentSummery { get; set; } = null!;
-        public List<OrderedItem> OrderedItems { get; set; } = [];
+        public ShippingAddressDto ShippingAddress { get; set; } = null!;
+        public PaymentSummeryDto PaymentSummery { get; set; } = null!;
+        public List<OrderedItemDto> OrderedItems { get; set; } = [];
     }
 }

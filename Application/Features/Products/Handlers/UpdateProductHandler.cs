@@ -1,4 +1,4 @@
-﻿using Application.Dtos;
+﻿using Application.Dtos.ProductDtos;
 using Application.Features.Products.Commands;
 using Application.Interfaces;
 using Domain.Abstractions;
@@ -43,15 +43,15 @@ namespace Application.Features.Products.Handlers
                 }).ToList()
             };
             await _cmd.UpdateAsync(product);
-            var dto = new ProductDto(
-                product.Id,
-                product.Title,
-                product.Description,
-                product.ImageUrl,
-                product.CategoryId,
-                product.Category?.Name ?? string.Empty,
-                product.Options.Select(o => new ProductOptionDto(o.Size, o.Price)).ToList()
-            );
+            var dto = new ProductDto {
+                Id =product.Id,
+                Title = product.Title,
+                Description = product.Description,
+                ImageUrl = product.ImageUrl,
+                CategoryId = product.CategoryId,
+                CategoryName =product.Category?.Name ?? string.Empty,
+                Options =product.Options.Select(o => new ProductOptionDto { Size = o.Size, Price = o.Price }).ToList()
+            };
             return ResultT<ProductDto>.Success(dto);
         }
     }

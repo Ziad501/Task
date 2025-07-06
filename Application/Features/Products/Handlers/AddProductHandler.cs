@@ -1,4 +1,4 @@
-﻿using Application.Dtos;
+﻿using Application.Dtos.ProductDtos;
 using Application.Features.Products.Commands;
 using Application.Interfaces;
 using Domain.Abstractions;

@@ -1,7 +1,7 @@
-﻿using Application.Dtos;
+﻿using Application.Dtos.ProductDtos;
 using FluentValidation;
 
-namespace Application.validators
+namespace Application.validators.ProductValidators
 {
     public class ProductOptionUpdateDtoValidator : AbstractValidator<ProductOptionUpdateDto>
     {

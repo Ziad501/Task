@@ -1,4 +1,4 @@
-﻿using Application.Dtos;
+﻿using Application.Dtos.ProductDtos;
 using Application.Features.Products.Queries;
 using Application.Interfaces;
 using Domain.Models;
@@ -18,17 +18,19 @@ namespace Application.Features.Products.Handlers
                 products = products.Where(p => p.Title.Contains(request.SearchedItem));
             }
             var productResponse = products
-                .Select(p => new ProductDto(
-                p.Id,
-                p.Title,
-                p.Description,
-                p.ImageUrl,
-                p.CategoryId,
-                p.Category != null ? p.Category.Name : string.Empty,
-                p.Options.Select(o => new ProductOptionDto(
-                    o.Size,
-                    o.Price)).ToList()
-            ));
+                .Select(p => new ProductDto {
+                    Id = p.Id,
+                    Title = p.Title,
+                    Description = p.Description,
+                    ImageUrl = p.ImageUrl,
+                    CategoryId = p.CategoryId,
+                    CategoryName = p.Category != null ? p.Category.Name : string.Empty,
+                    Options = p.Options.Select(o => new ProductOptionDto
+                    {
+                        Size = o.Size,
+                        Price = o.Price
+                    }).ToList()
+                });
             return await PagedList<ProductDto>.CreateAsync(productResponse, request.page, request.pageSize,cancellationToken);
 
         }

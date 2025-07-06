@@ -1,12 +1,13 @@
-﻿namespace Application.Dtos
+﻿
+namespace Application.Dtos.ProductDtos
 {
-    public sealed class ProductUpdateDto
+    public class ProductCreateDto
     {
-        public Guid Id { get; set; }
         public string Title { get; set; } = string.Empty;
         public string Description { get; set; } = string.Empty;
         public string ImageUrl { get; set; } = string.Empty;
         public Guid CategoryId { get; set; }
-        public List<ProductOptionUpdateDto> Options { get; set; } = new();
+        public List<ProductOptionCreateDto> Options { get; set; } = [];
     }
+
 }
