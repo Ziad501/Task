@@ -1,5 +1,6 @@
 ﻿using Application.Dtos.ProductDtos;
 using Application.Features.Products.Queries;
+using Domain.Abstractions;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -29,10 +30,16 @@ namespace Presentation.Controllers
 
             var product = await _mediator.Send(new GetProductByIdQuery(id), cancellationToken);
 
-            if (product == null)
-                return NotFound("No product with the corresponding id");
+            if (product.IsFailure)
+            {
+                if (product.Error == Errors.NotFound)
+                {
+                    return NotFound(product.Error);
+                }
+                return BadRequest(product.Error);
+            }
 
-            return Ok(product);
+            return Ok(product.Value);
         }
-    }
+    }   
 }

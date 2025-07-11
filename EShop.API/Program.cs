@@ -1,7 +1,6 @@
 ﻿using Application;
 using Domain.Models;
 using EShop.API;
-using FluentValidation.AspNetCore;
 using Infrastructure;
 using Infrastructure.Data;
 using Microsoft.AspNetCore.Authentication.JwtBearer;

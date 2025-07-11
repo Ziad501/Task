@@ -6,15 +6,8 @@ using MediatR;
 
 namespace Application.Features.Cart.Handlers
 {
-    public class GetCartByIdHandler : IRequestHandler<GetCartByIdQuery, ResultT<CartDto>>
+    public class GetCartByIdHandler(ICartRepository _cartRepo) : IRequestHandler<GetCartByIdQuery, ResultT<CartDto>>
     {
-        private readonly ICartRepository _cartRepo;
-
-        public GetCartByIdHandler(ICartRepository cartRepo)
-        {
-            _cartRepo = cartRepo;
-        }
-
         public async Task<ResultT<CartDto>> Handle(GetCartByIdQuery request, CancellationToken cancellationToken)
         {
             var cart = await _cartRepo.GetCartAsync(request.Id);
