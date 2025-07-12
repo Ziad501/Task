@@ -1,4 +1,5 @@
 ﻿using Application.Dtos.ProductDtos;
+using Application.Features;
 using Application.Features.Products.Queries;
 using Domain.Abstractions;
 using MediatR;
@@ -13,7 +14,7 @@ namespace Presentation.Controllers
     {
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<ActionResult<List<ProductDto>>> GetAllProducts(string? SearchedItem,int page, int pageSize,CancellationToken cancellationToken)
+        public async Task<ActionResult<PagedList<ProductDto>>> GetAllProducts(string? SearchedItem,int page, int pageSize,CancellationToken cancellationToken)
         {
             var result = await _mediator.Send(new GetAllProductsQuery(SearchedItem,page,pageSize), cancellationToken);
             return Ok(result);
